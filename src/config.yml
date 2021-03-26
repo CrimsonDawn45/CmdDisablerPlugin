@@ -1,0 +1,9 @@
+send-disabled-command-message: true
+disabled-command-message: "Unknown command. Type \"/help\" for help."
+permission-error-message: "&cYou must be an operator for that command!"
+invalid-option-error-message: "&cInvalid option! Use &r\"/cmdd enable\"&c or &r\"/cmdd disable\"&c."
+invalid-command-error-message: "&cPlease enter a valid command label."
+not-disabled-error-message: "\"/%command%\"&c is not disabled."
+already-disabled-error-message: "\"%command%\"&c is already disabled."
+disabled-success-message: "\"/%command%\"&a is now disabled."
+enabled-success-message: "\"/%command%\"&a is now enabled.

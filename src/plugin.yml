@@ -1,0 +1,9 @@
+name: CmdDisabler
+version: 1.0
+author: CrimsonDawn45
+main: me.crimsondawn45.cmddisabler.CmdDisabler
+api-version: 1.16
+description: Disables commands
+commands:
+  cmdd:
+    usage: /cmdd [disable|enable] <command>
