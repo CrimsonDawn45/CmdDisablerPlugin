@@ -24,9 +24,6 @@ public class CmddCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
 
-        DataFile commands = this.plugin.commands;
-        FileConfiguration config = commands.getConfig();
-
         if(sender instanceof Player) {
 
             Player player = (Player) sender;
@@ -36,7 +33,7 @@ public class CmddCommand implements CommandExecutor {
                 return true;
 
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("permission-error-message")));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("permission-error-message")));
                 return true;
             }
 
@@ -49,28 +46,29 @@ public class CmddCommand implements CommandExecutor {
     //Handle command after permission checks
     private static void handleCommand(CommandSender sender, String[] args, CmdDisabler plugin) {
 
-        DataFile commands = plugin.commands;
-        FileConfiguration config = commands.getConfig();
-
-        //Check if there is a command string
-        if(args[1] != null && args[1] != "") {
+        //Check if there is an option string
+        if(args[0] != null && args[0] != "") {
 
             String option = args[0].toLowerCase();
-            String command = args[1].toLowerCase();
 
-            switch(option) {
-                case("enable"):
-                    enable(sender, command, plugin);
-                    break;
-                case("disable"):
-                    disable(sender, command, plugin);
-                    break;
-                default:
-                    sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("invalid-option-error-message").replace("%option%", option).replace("%command%", command)));
-                    break;
+            if(args[1] != null && args[1] != "") {
+                String command = args[1].toLowerCase();
+
+                switch(option) {
+                    case("enable"):
+                        enable(sender, command, plugin);
+                        break;
+                    case("disable"):
+                        disable(sender, command, plugin);
+                        break;
+                    default:
+                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("invalid-option-error-message")));
+                        break;
+                }
             }
+
         } else {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("invalid-command-error-message")));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("invalid-command-error-message")));
         }
     }
 
@@ -87,14 +85,14 @@ public class CmddCommand implements CommandExecutor {
                 disabledCommandList.remove(command);
                 config.set("disabled-commands", disabledCommandList);
                 commands.save(config);
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("enabled-success-message").replace("%command%", command)));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("enabled-success-message").replace("%command%", command)));
 
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("not-disabled-error-message").replace("%command%", command)));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("not-disabled-error-message").replace("%command%", command)));
             }
 
         } else {
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("not-disabled-error-message").replace("%command%", command)));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("not-disabled-error-message").replace("%command%", command)));
         }
     }
 
@@ -111,10 +109,10 @@ public class CmddCommand implements CommandExecutor {
                 disabledCommandList.add(command);
                 config.set("disabled-commands", disabledCommandList);
                 commands.save(config);
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("disabled-success-message").replace("%command%", command)));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("disabled-success-message").replace("%command%", command)));
 
             } else {
-                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("already-disabled-error-message").replace("%command%", command)));
+                sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("already-disabled-error-message").replace("%command%", command)));
             }
 
         } else {
@@ -122,7 +120,7 @@ public class CmddCommand implements CommandExecutor {
             disabledCommandList.add(command);
             config.set("disabled-commands", disabledCommandList);
             commands.save(config);
-            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', config.getString("disabled-success-message").replace("%command%", command)));
+            sender.sendMessage(ChatColor.translateAlternateColorCodes('&', plugin.getConfig().getString("disabled-success-message").replace("%command%", command)));
         }
     }
 }

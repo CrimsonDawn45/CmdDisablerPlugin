@@ -33,12 +33,12 @@ public class CmdPreProcessEvent implements Listener {
 
                 for(String label : config.getStringList("disabled-commands")) {
 
-                    if(label.toLowerCase() == commandLabel) {
+                    if(commandLabel.startsWith(label.toLowerCase())) {
 
                         event.setCancelled(true);
 
-                        if(config.getBoolean("send-disabled-command-message")) {
-                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("disabled-command-message")));
+                        if(this.plugin.getConfig().getBoolean("send-disabled-command-message")) {
+                            player.sendMessage(ChatColor.translateAlternateColorCodes('&', this.plugin.getConfig().getString("disabled-command-message").replace("%command%", commandLabel)));
                         }
                         return;
                     }
